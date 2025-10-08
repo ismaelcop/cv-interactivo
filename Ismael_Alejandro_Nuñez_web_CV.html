@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terminal CV - Ismael Alejandro Núñez</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc+PHBhdGggZmlsbD0nIzAwRkYwMCcgZD0nTTguNyAzLjNMMiAxMGw2LjcgNi43IDEuNC0xLjRMNS45IDEwbDQuMi00LjJMOC43IDMuM3ptNi42IDBsLTEuNCAxLjRMMTguMSAxMGwtMy44IDMuOCAxLjQgMS40TDIyIDEwbC02LjctNi43eicvPjwvc3ZnPg==">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:#00FF00;font-family:'Courier New',monospace;text-transform:uppercase;line-height:1.4}
+#header{padding:12px 16px;border-bottom:2px solid #00FF00;display:flex;justify-content:space-between;align-items:center}
+#download{cursor:pointer;text-decoration:underline}
+#start-screen{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:20px}
+#terminal-text{max-width:800px;font-size:18px;white-space:pre-wrap;text-align:center}
+.cursor{width:10px;height:20px;background:#00FF00;display:inline-block;margin-left:6px;animation:blink .8s infinite}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+#start-btn{margin-top:20px;padding:10px 18px;background:transparent;border:2px solid #00FF00;color:#00FF00;cursor:pointer;opacity:0;pointer-events:none}
+#menu-box,#content-box{border:2px solid #00FF00;margin:20px auto;padding:16px;width:90%;max-width:780px;display:none;min-height:240px;flex-direction:column}
+#menu-instructions{color:#00FF00;text-align:center;margin-bottom:12px;font-size:16px;font-family:'Courier New',monospace;white-space:pre-wrap}
+.menu-item{padding:8px;cursor:pointer}
+.menu-item.selected{background:#00FF00;color:#000}
+#photo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:2px solid #00FF00}
+.section-title{text-align:center;font-size:22px;margin-bottom:15px;text-transform:uppercase;}
+#back-info{text-align:center;margin-bottom:20px;font-size:16px;text-transform:none;}
+#back-info span{text-transform:uppercase;}
+#content ul{list-style-type:"• ";padding-left:20px;text-transform:none;}
+#content li{margin-bottom:8px;}
+@media(max-width:600px){#terminal-text{font-size:14px}#photo{width:72px;height:72px}}
+</style>
+</head>
+<body>
+
+<div id="start-screen">
+  <div id="terminal-text"></div>
+  <div class="cursor"></div>
+  <button id="start-btn">INICIAR TERMINAL</button>
+</div>
+
+<div id="header">
+  <div>TERMINAL CV ISMAEL ALEJANDRO NUÑEZ | FECHA: 08-10-2025</div>
+  <div id="download" onclick="window.open('cv_ismael_nunez.pdf')">📄 DESCARGAR CV EN PDF</div>
+</div>
+
+<div id="menu-box">
+  <div id="menu-instructions"></div>
+  <div id="menu"></div>
+</div>
+
+<div id="content-box" class="fade">
+  <div id="back-info">presioná "<span>ESC</span>" para volver al menú</div>
+  <div id="section-title" class="section-title"></div>
+  <div id="content"></div>
+</div>
+
+<script>
+const options = ["SOBRE_MI","EXPERIENCIA_P&G","EXPERIENCIA_DREAMCO","PROYECTOS","SKILLS","EXPECTATIVAS","MIS_DATOS","CONTACTO","SALIR"];
+const content = {
+"SOBRE_MI": [
+  "ISMAEL ALEJANDRO NÚÑEZ",
+  "Administrativo de Mantenimiento | SAP | Power Apps | Desarrollo Web",
+  "Profesional con más de 14 años de experiencia en operaciones, mantenimiento y transformación digital.",
+  "Experto en digitalización de procesos y desarrollo de soluciones tecnológicas aplicadas a entornos productivos.",
+  "Reconocido por innovación y mejora continua, orientado a roles estratégicos y liderazgo."
+],
+"EXPERIENCIA_P&G": [
+  "PROCTER & GAMBLE — 13 AÑOS",
+  "• Gestión de procesos en centros de distribución: picking, inventario, recepción y administración.",
+  "• Desarrollo de más de 10 aplicaciones con Power Apps para digitalizar procesos operativos.",
+  "• Integración con SAP para trazabilidad de órdenes de trabajo.",
+  "• Reconocimiento monetario por impacto en eficiencia y reducción de errores.",
+  "• Liderazgo en implementación de soluciones digitales y formación de usuarios."
+],
+"EXPERIENCIA_DREAMCO": [
+  "DREAMCO S.A. — 1.5 AÑOS",
+  "• Reaplicación y evolución de soluciones digitales desarrolladas en P&G.",
+  "• Implementación de apps con Power Apps para mantenimiento, logística e inventario.",
+  "• Integración con SAP para gestión de órdenes de trabajo y trazabilidad.",
+  "• Desarrollo de reportes visuales con Power BI.",
+  "• Coordinación con proveedores y operarios para asegurar la continuidad operativa."
+],
+"PROYECTOS": [
+  "APLICACIONES DESTACADAS",
+  "• Relevar Racks: inspección de estructuras con reportes visuales y análisis en Power BI.",
+  "• Conteo Sin Etiqueta: conteo cíclico de inventario con control de diferencias y trazabilidad.",
+  "• Taller CD - OT's: gestión de órdenes de mantenimiento con historial completo.",
+  "• Check-Lists de equipos: seguridad operativa diaria en equipos de elevación.",
+  "• EPP Operación: solicitud y control de elementos de protección personal.",
+  "• Tienda Online: desarrollo completo con Node.js, Express, HTML, CSS, JS y conexión a Mercado Pago."
+],
+"SKILLS": [
+  "HABILIDADES TÉCNICAS",
+  "• Power Apps: más de 10 apps en producción (gestión de mantenimiento, inventario, seguridad).",
+  "• SAP: control de órdenes de trabajo, trazabilidad y planes preventivos.",
+  "• Desarrollo Web: Node.js, Express, HTML, CSS, JavaScript.",
+  "• Power BI: reportes visuales y dashboards.",
+  "• PostgreSQL: bases de datos en Neon.",
+  "• Visual Basic: automatización de procesos administrativos.",
+  "• Paquete Office: Excel avanzado (macros, tablas dinámicas), Word, PowerPoint, Outlook.",
+  "• Integración con APIs: Mercado Pago, formularios.",
+  "• Gestión de proveedores y operarios.",
+  "• Mejora continua y liderazgo técnico."
+],
+"EXPECTATIVAS": [
+  "Busco roles estratégicos o de liderazgo donde pueda aplicar mi experiencia operativa y conocimientos tecnológicos.",
+  "Mi objetivo: liderar proyectos de transformación digital y aportar valor en organizaciones que prioricen innovación."
+],
+"MIS_DATOS": [
+  "Nombre: Ismael Alejandro Núñez",
+  "Email: ismael201650@gmail.com",
+  "Tel: 11-64741259",
+  "LinkedIn: https://www.linkedin.com/in/ismael-alejandro-nu%C3%B1ez-a4a065229/",
+  "GitHub: https://github.com/ismaelcop/cv-interactivo.git"
+],
+"CONTACTO": [
+  "Email: ismael201650@gmail.com",
+  "Tel: 11-64741259",
+  "LinkedIn: https://www.linkedin.com/in/ismael-alejandro-nu%C3%B1ez-a4a065229/",
+  "GitHub: https://github.com/ismaelcop/cv-interactivo.git"
+],
+"SALIR": [
+  "GRACIAS POR VISITAR MI CV INTERACTIVO."
+]
+};
+
+// Beep de selección
+function playSelectBeep(){ 
+  try{ 
+    if(!window.audioCtx) window.audioCtx=new (window.AudioContext||window.webkitAudioContext)(); 
+    const o=window.audioCtx.createOscillator(); 
+    const g=window.audioCtx.createGain(); 
+    o.type='square'; 
+    o.frequency.setValueAtTime(700,window.audioCtx.currentTime); 
+    g.gain.setValueAtTime(0.15,window.audioCtx.currentTime); 
+    o.connect(g).connect(window.audioCtx.destination); 
+    o.start(); 
+    o.stop(window.audioCtx.currentTime+0.08);
+  }catch(e){} 
+}
+
+// Renderizado del contenido con formato
+function renderContent(section) {
+  const data = content[section] || [];
+  let html = "";
+  if (data.length > 0) {
+    html += `<h3>${data[0]}</h3>`;
+    if (data.length > 1) {
+      html += "<ul>";
+      for (let i = 1; i < data.length; i++) {
+        html += `<li>${data[i].replace("• ", "")}</li>`;
+      }
+      html += "</ul>";
+    }
+  }
+  return html;
+}
+
+const menuDiv=document.getElementById('menu');
+const menuBox=document.getElementById('menu-box');
+const contentBox=document.getElementById('content-box');
+const contentDiv=document.getElementById('content');
+const sectionTitle=document.getElementById('section-title');
+const startScreen=document.getElementById('start-screen');
+const startBtn=document.getElementById('start-btn');
+const terminalText=document.getElementById('terminal-text');
+const menuInstructionsDiv=document.getElementById('menu-instructions');
+let selectedIndex=0;
+
+// Render menú
+function renderMenu(){ 
+  menuDiv.innerHTML=''; 
+  options.forEach((opt,i)=>{
+    const d=document.createElement('div'); 
+    d.textContent=`${i+1}. ${opt.replace('_',' ')}`; 
+    d.className='menu-item'+(i===selectedIndex?' selected':''); 
+    d.onclick=()=>{ selectedIndex=i; openContent(); }; 
+    menuDiv.appendChild(d); 
+  });
+}
+
+// Abrir contenido
+function openContent(){ 
+  playSelectBeep(); 
+  menuBox.style.display='none'; 
+  contentBox.style.display='block'; 
+  const current = options[selectedIndex];
+  sectionTitle.textContent = current.replace('_',' ');
+  contentDiv.innerHTML = renderContent(current);
+}
+
+// Manejo de teclas
+function handleKey(e){
+  if(contentBox.style.display==='block' && e.key==='Escape'){ 
+    contentBox.style.display='none'; 
+    menuBox.style.display='flex'; 
+    renderMenu(); 
+  } else if(menuBox.style.display==='flex'){
+    if(e.key==='ArrowDown'){ selectedIndex=(selectedIndex+1)%options.length; renderMenu(); e.preventDefault(); }
+    else if(e.key==='ArrowUp'){ selectedIndex=(selectedIndex-1+options.length)%options.length; renderMenu(); e.preventDefault(); }
+    else if(e.key==='Enter'){ openContent(); }
+  }
+}
+
+// Intro typing lines
+const introLines = [
+  "SISTEMA DE PRESENTACIÓN DE CV v1.0",
+  "CARGANDO COMPONENTES...",
+  "INICIALIZANDO INTERFAZ...",
+  "ACCESO PERMITIDO",
+  "",
+  "BIENVENIDO ISMAEL ALEJANDRO NUÑEZ",
+  "",
+  "PRESIONÁ [INICIAR TERMINAL] PARA COMENZAR"
+];
+
+let lineIndex=0;
+
+function typeIntroLine(){
+  if(lineIndex<introLines.length){
+    const line=introLines[lineIndex];
+    let charIndex=0;
+    const lineInterval=setInterval(()=>{
+      if(charIndex<line.length){
+        terminalText.textContent+=line[charIndex++];
+        playSelectBeep();
+      }else{
+        terminalText.textContent+='\n';
+        clearInterval(lineInterval);
+        lineIndex++;
+        setTimeout(typeIntroLine, 200);
+      }
+    },40);
+  } else {
+    document.querySelector('.cursor').style.display='none';
+    startBtn.style.opacity=1;
+    startBtn.style.pointerEvents='all';
+  }
+}
+
+// Iniciar
+typeIntroLine();
+
+startBtn.addEventListener('click', ()=>{
+  startScreen.remove();
+  menuBox.style.display='flex';
+  const menuInstructionsText = "navigate: ↑ ↓       select: ENTER      salir: ESC";
+  function typeMenuInstructions(callback){
+    menuInstructionsDiv.textContent='';
+    let i=0;
+    const interval=setInterval(()=>{
+      if(i<menuInstructionsText.length){
+        menuInstructionsDiv.textContent+=menuInstructionsText[i++];
+      } else {
+        clearInterval(interval);
+        if(callback) callback();
+      }
+    },20);
+  }
+  typeMenuInstructions(()=>renderMenu());
+  window.focus();
+  document.body.focus();
+  document.addEventListener('keydown', handleKey);
+});
+</script>
+</body>
+</html>
